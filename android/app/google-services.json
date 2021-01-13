@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "697071771977",
+    "project_id": "tacos-app-3d868",
+    "storage_bucket": "tacos-app-3d868.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697071771977:android:fea4b72849dd7c81667a98",
+        "android_client_info": {
+          "package_name": "com.example.tacos_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697071771977-0vmk8fokdt317dndk2b8dgashce9t48p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcSfzEhvSXnvetDU9BM9VSr8EKfQM_kIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697071771977-0vmk8fokdt317dndk2b8dgashce9t48p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
