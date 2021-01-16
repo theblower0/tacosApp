@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:tacos_app/login/check_auth.dart';
-import 'package:tacos_app/login/login.dart';
+import 'package:tacos_app/screens/menu/wrap_menu.dart';
 import 'package:tacos_app/shared/CustomPageRoute.dart';
 
 class Wrapper extends StatefulWidget {
@@ -30,7 +30,7 @@ class _WrapperState extends State<Wrapper> {
             children: [
               Container(
                 padding: EdgeInsets.only(
-                    top: queryData.size.height / 5,
+                    top: queryData.size.height / 10,
                     bottom: queryData.size.height / 40),
                 child: Text(
                   '¡Bienvenido!',
@@ -64,7 +64,12 @@ class _WrapperState extends State<Wrapper> {
               ),
               SizedBox(height: 40),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CustomPageRoute(widget: WrappMenu()),
+                  );
+                },
                 color: Colors.white,
                 child: Text(
                   'Menú',

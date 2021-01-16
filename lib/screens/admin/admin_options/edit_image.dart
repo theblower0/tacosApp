@@ -20,7 +20,12 @@ class _EditImageState extends State<EditImage> {
   var data;
 
   Future choiceImage(UpdateProduct updateProduct) async {
-    var pickedImage = await picker.getImage(source: ImageSource.gallery);
+    var pickedImage = await picker.getImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+      maxHeight: 200,
+      maxWidth: 200,
+    );
     if (pickedImage != null) {
       setState(() {
         _image = File(pickedImage.path);
@@ -36,7 +41,7 @@ class _EditImageState extends State<EditImage> {
 
     updateProduct.image = base64Image;
     updateProduct.nameImage = fileName;
-    print(updateProduct.nameImage);
+    //print(updateProduct.nameImage);
   }
 
   @override
@@ -45,7 +50,7 @@ class _EditImageState extends State<EditImage> {
     final updateProduct = Provider.of<UpdateProduct>(context);
     Uint8List bytes = base64Decode(updateProduct.image);
 
-    print('es el image: ' + updateProduct.image);
+    //print('es el image: ' + updateProduct.image);
 
     MediaQueryData queryData = MediaQuery.of(context);
     return Container(

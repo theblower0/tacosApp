@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tacos_app/login/wrapper.dart';
 import 'package:tacos_app/screens/admin/admin_options/add_dish.dart';
 import 'package:tacos_app/screens/admin/admin_options/delete_dish.dart';
 import 'package:tacos_app/screens/admin/admin_options/edit_dish.dart';
@@ -20,6 +22,25 @@ class _AdminOptionState extends State<AdminOption> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            actions: [
+              FlatButton.icon(
+                onPressed: () {
+                  _logout();
+                },
+                icon: Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                label: Text(
+                  'Cerrar Sesión',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .copyWith(color: Colors.white),
+                ),
+              )
+            ],
             backgroundColor: Color.fromRGBO(227, 26, 33, 1),
             shape: RoundedRectangleBorder(
                 borderRadius:
@@ -59,5 +80,11 @@ class _AdminOptionState extends State<AdminOption> {
     //     style: Theme.of(context).textTheme.headline1,
     //   ),
     // );
+  }
+
+  _logout() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Wrapper()));
   }
 }

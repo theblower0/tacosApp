@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tacos_app/screens/admin/admin_options/admin_option.dart';
-import 'package:tacos_app/screens/admin/admin_order_option/admin_order_option.dart';
 import 'package:tacos_app/screens/admin/admin_order_view/admin_order_view.dart';
 
 class AdminDashboard extends StatefulWidget {
@@ -17,7 +15,7 @@ class _AdminDashoardState extends State<AdminDashboard> {
   final List<Widget> _widgetOptions = <Widget>[
     AdminOption(),
     OrderView(),
-    OrderOption(),
+
     //Menu();
   ];
   void _onItemTapped(int index) {
@@ -28,7 +26,7 @@ class _AdminDashoardState extends State<AdminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData = MediaQuery.of(context);
+    //MediaQueryData queryData = MediaQuery.of(context);
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -39,7 +37,7 @@ class _AdminDashoardState extends State<AdminDashboard> {
         showUnselectedLabels: false,
         showSelectedLabels: false,
         elevation: 30,
-        iconSize: 20,
+        iconSize: 30,
         items: [
           BottomNavigationBarItem(
             icon: Icon(
@@ -53,17 +51,6 @@ class _AdminDashoardState extends State<AdminDashboard> {
             ),
             label: 'Pedidos',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.fact_check,
-            ),
-            label: 'Orden',
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.menu_book,
-              ),
-              label: 'Menú'),
         ],
         onTap: _onItemTapped,
       ),

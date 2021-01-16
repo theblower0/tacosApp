@@ -26,7 +26,7 @@ final appTheme = ThemeData(
   buttonTheme: ButtonThemeData(
     buttonColor: Color.fromRGBO(227, 26, 33, 1),
     disabledColor: Color.fromRGBO(227, 26, 33, 1),
-    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
   ),
 );

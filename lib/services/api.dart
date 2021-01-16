@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tacos_app/models/product.dart';
 import 'package:tacos_app/models/response.dart';
-import 'package:tacos_app/screens/admin/admin_options/upload_image.dart';
 
 class Network {
-  static String _url = "http://192.168.0.8/tacos-app/public/";
+  static String _url = "https://taquemaster.000webhostapp.com";
   var token;
 
   _getToken() async {
@@ -63,5 +61,64 @@ class Network {
     } else {
       return null;
     }
+  }
+
+  Future<GetResponse> deleteProduct(data) async {
+    final response = await http.post('$_url/menu/deleteProduct',
+        headers: _setHeaders(), body: jsonEncode(data));
+    if (response.statusCode == 200) {
+      final String responseString = response.body;
+
+      return getResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
+  Future<GetResponse> deleteOrder(data) async {
+    final response = await http.post('$_url/orders/deleteOrder',
+        headers: _setHeaders(), body: jsonEncode(data));
+    if (response.statusCode == 200) {
+      final String responseString = response.body;
+
+      return getResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
+  Future<GetResponse> addOrderBackup(data) async {
+    final response = await http.post('$_url/orderBackup/addOrderBackup',
+        headers: _setHeaders(), body: jsonEncode(data));
+    if (response.statusCode == 200) {
+      final String responseString = response.body;
+
+      return getResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
+  Future<GetResponse> createOrder(data) async {
+    final response = await http.post('$_url/orders/addOrder',
+        headers: _setHeaders(), body: jsonEncode(data));
+    if (response.statusCode == 200) {
+      final String responseString = response.body;
+
+      return getResponseFromJson(responseString);
+    } else {
+      return null;
+    }
+  }
+
+  addDetailOrder(data) async {
+    return await http.post('$_url/detailOrder/addDetailOrder',
+        headers: _setHeaders(), body: jsonEncode(data));
+  }
+
+  getID() async {
+    return await http.get(
+      '$_url/orders/getId',
+    );
   }
 }

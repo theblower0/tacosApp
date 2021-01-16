@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tacos_app/models/data_image.dart';
 import 'package:tacos_app/models/product.dart';
-import 'package:tacos_app/screens/admin/admin_options/image_form.dart';
 
 class UploadImage extends StatefulWidget {
   UploadImage({Key key}) : super(key: key);

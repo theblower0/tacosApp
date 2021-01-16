@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tacos_app/login/login.dart';
 import 'package:tacos_app/screens/admin/admin_dashboard.dart';
-import 'package:tacos_app/shared/loading.dart';
 
 class CheckAuth extends StatefulWidget {
   CheckAuth({Key key}) : super(key: key);
@@ -40,6 +39,6 @@ class _CheckAuthState extends State<CheckAuth> {
       loading = false;
       widget = Login();
     }
-    return loading ? Loading() : Scaffold(body: widget);
+    return Scaffold(body: widget);
   }
 }

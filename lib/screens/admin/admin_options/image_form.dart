@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tacos_app/models/data_image.dart';
 import 'package:tacos_app/models/product.dart';
-import 'package:http/http.dart' as http;
 import 'package:tacos_app/services/api.dart';
 import 'package:tacos_app/shared/constants.dart';
 
@@ -18,14 +15,16 @@ class ImageForm extends StatefulWidget {
 }
 
 ProductModel product;
-final _formKey = GlobalKey<FormState>();
+
 var idProducto;
 var nombre;
 var precio;
 var image;
 var nameImage;
+var token;
 
 class _ImageFormState extends State<ImageForm> {
+  GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final dataImage = Provider.of<DataImage>(context);
@@ -34,23 +33,22 @@ class _ImageFormState extends State<ImageForm> {
     return Scaffold(
       body: ResponsiveWrapper(
         child: Container(
+          // color: Colors.amber,
           height: queryData.size.height * 1.3,
           width: double.infinity,
-          child: Center(
+          child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(top: queryData.size.height / 15),
+                  padding: EdgeInsets.only(top: queryData.size.height / 18),
                   child: Text(
                     'Añade un nuevo producto',
                     style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: queryData.size.width * 0.1),
                   child: Form(
-                      key: _formKey,
+                      key: _formKey1,
                       child: Column(
                         children: [
                           SizedBox(
@@ -126,7 +124,7 @@ class _ImageFormState extends State<ImageForm> {
                           ),
                           RaisedButton(
                             onPressed: () {
-                              if (_formKey.currentState.validate()) {
+                              if (_formKey1.currentState.validate()) {
                                 image = dataImage.image;
                                 nameImage = dataImage.nameImage;
                                 _uploadProduct();
@@ -149,13 +147,15 @@ class _ImageFormState extends State<ImageForm> {
   }
 
   _uploadProduct() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    token = preferences.get('token');
     var dataProduct = {
       'id_producto': idProducto,
       'nombre_producto': nombre,
       'precio': precio,
       'image': image,
       'name_image': nameImage,
-      'api_token': 'cX0ywLQ3l3MCyVdGSrcOp9o0TK4Lq12u'
+      'api_token': token
     };
 
     final response = await Network().createProduct(dataProduct);

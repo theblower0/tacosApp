@@ -19,7 +19,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool loading = false;
-  final _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var userName;
   var password;
   var apiToken;
@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(top: queryData.size.height / 20),
+                  padding: EdgeInsets.only(top: queryData.size.height / 25),
                   child: SvgPicture.asset(
                     'assets/images/login_il.svg',
                     height: queryData.size.height / 3,
@@ -44,24 +44,24 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 10),
                   child: Text(
                     'Inicia Sesión',
                     style: Theme.of(context)
                         .textTheme
                         .headline1
-                        .copyWith(color: Colors.black),
+                        .copyWith(color: Colors.black, fontSize: 40),
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: queryData.size.width * 0.1),
+                      vertical: 0.0, horizontal: queryData.size.width * 0.2),
                   child: Form(
                       key: _formKey,
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 30,
+                            height: 5,
                           ),
                           Container(
                             child: TextFormField(
@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           TextFormField(
                             obscureText: true,
@@ -95,7 +95,9 @@ class _LoginState extends State<Login> {
                               labelStyle: Theme.of(context)
                                   .textTheme
                                   .bodyText1
-                                  .copyWith(color: Colors.black54),
+                                  .copyWith(
+                                    color: Colors.black54,
+                                  ),
                               prefixIcon: Icon(
                                 Icons.lock,
                                 size: 35,
@@ -110,7 +112,7 @@ class _LoginState extends State<Login> {
                             },
                           ),
                           SizedBox(
-                            height: 30.0,
+                            height: 10.0,
                           ),
                           RaisedButton(
                             onPressed: () {
@@ -142,12 +144,12 @@ class _LoginState extends State<Login> {
     });
     var data = {'name': userName, 'password': password};
 
-    var res = await Network().authData(data, 'users/login');
+    var res = await Network().authData(data, '/users/login');
     print(res.body);
     var body = json.decode(res.body);
     if (body['res']) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('token', jsonEncode(body['token']));
+      localStorage.setString('token', body['token']);
       localStorage.setString('name', jsonEncode(body['name']));
 
       Navigator.push(

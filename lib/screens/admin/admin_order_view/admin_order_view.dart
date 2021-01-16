@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tacos_app/screens/admin/admin_order_view/order_completed.dart';
+import 'package:tacos_app/screens/admin/admin_order_view/pending_order.dart';
 
 class OrderView extends StatefulWidget {
   OrderView({Key key}) : super(key: key);
@@ -35,6 +37,7 @@ class _OrderViewState extends State<OrderView> {
               ],
             ),
           ),
+          body: TabBarView(children: [PendingOrder(), OrderCompleted()]),
         ));
   }
 }

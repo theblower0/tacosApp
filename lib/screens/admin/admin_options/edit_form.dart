@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:tacos_app/models/data_image.dart';
-import 'package:tacos_app/models/image_upate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tacos_app/models/update_product.dart';
 
 import 'package:tacos_app/services/api.dart';
@@ -17,28 +14,24 @@ class EditForm extends StatefulWidget {
   _EditFormState createState() => _EditFormState();
 }
 
-final _formKey = GlobalKey<FormState>();
 var idProducto;
 var nombre;
 var precio;
 var image;
 var nameImage;
 var isPressed = false;
+var token;
 TextEditingController controller;
 var textController = new TextEditingController();
 var textController2 = new TextEditingController();
 
 class _EditFormState extends State<EditForm> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   clearTextInput() {
     textController.clear();
     textController2.clear();
   }
 
+  GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final updateProduct = Provider.of<UpdateProduct>(context);
@@ -64,7 +57,7 @@ class _EditFormState extends State<EditForm> {
                   padding: EdgeInsets.symmetric(
                       horizontal: queryData.size.width * 0.1),
                   child: Form(
-                      key: _formKey,
+                      key: _formKey2,
                       child: Column(
                         children: [
                           SizedBox(
@@ -149,8 +142,7 @@ class _EditFormState extends State<EditForm> {
                           ),
                           RaisedButton(
                             onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                clearTextInput();
+                              if (_formKey2.currentState.validate()) {
                                 isPressed = true;
                                 idProducto = updateProduct.idProduct;
                                 image = updateProduct.image;
@@ -175,13 +167,15 @@ class _EditFormState extends State<EditForm> {
   }
 
   _updateProduct() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    token = preferences.get('token');
     var dataProduct = {
       'id_producto': idProducto,
       'nombre_producto': nombre,
       'precio': precio,
       'image': image,
       'name_image': nameImage,
-      'api_token': 'cX0ywLQ3l3MCyVdGSrcOp9o0TK4Lq12u'
+      'api_token': token
     };
 
     final response = await Network().updateProduct(dataProduct);

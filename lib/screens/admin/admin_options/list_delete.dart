@@ -4,8 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:tacos_app/models/product.dart';
-import 'package:tacos_app/models/update_product.dart';
+import 'package:tacos_app/models/delete_product_pro.dart';
 
 class ListDelete extends StatefulWidget {
   ListDelete({Key key}) : super(key: key);
@@ -18,7 +17,7 @@ class _ListDeleteState extends State<ListDelete> {
   List products = [];
 
   bool isLoading = false;
-  static String _url = "http://192.168.0.8/tacos-app/public/";
+  static String _url = "https://taquemaster.000webhostapp.com";
   @override
   void initState() {
     print('en el initState');
@@ -26,7 +25,7 @@ class _ListDeleteState extends State<ListDelete> {
     this.viewProduct();
   }
 
-  Future<ProductModel> viewProduct() async {
+  viewProduct() async {
     try {
       final response = await http.get('$_url/menu/viewProducts');
       if (response.statusCode == 200) {
@@ -46,7 +45,6 @@ class _ListDeleteState extends State<ListDelete> {
     }
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -57,8 +55,8 @@ class _ListDeleteState extends State<ListDelete> {
   }
 
   Widget getCard(index) {
-    final updateProduct = Provider.of<UpdateProduct>(context);
-    var _id;
+    final deleteProduct = Provider.of<DeleteProductProvider>(context);
+
     var image = index['image'].toString().replaceAll(r'\n|\s', '+');
     var name = index['nombre_producto'].toString();
     var idProducto = index['id_producto'].toString();
@@ -95,15 +93,12 @@ class _ListDeleteState extends State<ListDelete> {
           ],
         ),
         onTap: () async {
-          setState(() {
-            _id = index;
+          deleteProduct.idProduct = index['id_producto'];
+          deleteProduct.nombreProducto = index['nombre_producto'];
+          deleteProduct.precio = index['precio'].toString();
+          deleteProduct.image = index['image'];
+          deleteProduct.nameImage = index['name_image'];
 
-            updateProduct.idProduct = index['id_producto'];
-            updateProduct.nombreProducto = index['nombre_producto'];
-            updateProduct.precio = index['precio'].toString();
-            updateProduct.image = index['image'];
-            updateProduct.nameImage = index['name_image'];
-          });
           // Scaffold.of(context).showSnackBar(SnackBar(
           //     content: Text(index['id_producto'] +
           //         index['nombre_producto'] +

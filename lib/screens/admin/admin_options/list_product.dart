@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:tacos_app/models/product.dart';
 import 'package:tacos_app/models/update_product.dart';
 
 class ListProduct extends StatefulWidget {
@@ -18,7 +17,7 @@ class _ListProductState extends State<ListProduct> {
   List products = [];
 
   bool isLoading = false;
-  static String _url = "http://192.168.0.8/tacos-app/public/";
+  static String _url = "https://taquemaster.000webhostapp.com";
   @override
   void initState() {
     print('en el initState');
@@ -26,7 +25,7 @@ class _ListProductState extends State<ListProduct> {
     this.viewProduct();
   }
 
-  Future<ProductModel> viewProduct() async {
+  viewProduct() async {
     try {
       final response = await http.get('$_url/menu/viewProducts');
       if (response.statusCode == 200) {
@@ -46,7 +45,6 @@ class _ListProductState extends State<ListProduct> {
     }
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -58,7 +56,7 @@ class _ListProductState extends State<ListProduct> {
 
   Widget getCard(index) {
     final updateProduct = Provider.of<UpdateProduct>(context);
-    var _id;
+
     var image = index['image'].toString().replaceAll(r'\n|\s', '+');
     var name = index['nombre_producto'].toString();
     var idProducto = index['id_producto'].toString();
@@ -94,16 +92,12 @@ class _ListProductState extends State<ListProduct> {
             ),
           ],
         ),
-        onTap: () async {
-          setState(() {
-            _id = index;
-
-            updateProduct.idProduct = index['id_producto'];
-            updateProduct.nombreProducto = index['nombre_producto'];
-            updateProduct.precio = index['precio'].toString();
-            updateProduct.image = index['image'];
-            updateProduct.nameImage = index['name_image'];
-          });
+        onTap: () {
+          updateProduct.idProduct = index['id_producto'];
+          updateProduct.nombreProducto = index['nombre_producto'];
+          updateProduct.precio = index['precio'].toString();
+          updateProduct.image = index['image'];
+          updateProduct.nameImage = index['name_image'];
           // Scaffold.of(context).showSnackBar(SnackBar(
           //     content: Text(index['id_producto'] +
           //         index['nombre_producto'] +

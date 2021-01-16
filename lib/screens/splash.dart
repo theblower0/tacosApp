@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tacos_app/login/login.dart';
+import 'package:tacos_app/login/wrapper.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key key}) : super(key: key);
@@ -19,13 +19,13 @@ class _SplashState extends State<Splash> {
   }
 
   startTimer() async {
-    var duration = Duration(seconds: 5);
+    var duration = Duration(seconds: 8);
     return Timer(duration, route);
   }
 
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Login()));
+        context, MaterialPageRoute(builder: (context) => Wrapper()));
   }
 
   @override

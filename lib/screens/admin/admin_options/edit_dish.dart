@@ -10,31 +10,19 @@ class EditDish extends StatefulWidget {
   _EditDishState createState() => _EditDishState();
 }
 
-final widgets = [
-  Expanded(
-    child: ListProduct(),
-  ),
-  Expanded(
-    child: EditImage(),
-  ),
-  Expanded(
-    child: EditForm(),
-    flex: 2,
-  ),
-];
-
 class _EditDishState extends State<EditDish> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        if ((constraints.maxWidth < 600)) {
-          return Column(children: widgets);
-        } else {
-          return Row(children: widgets);
-        }
-      }),
-    );
+        body: Row(
+      children: [
+        Expanded(child: ListProduct()),
+        Expanded(child: EditImage()),
+        Expanded(
+          child: EditForm(),
+          flex: 2,
+        )
+      ],
+    ));
   }
 }
